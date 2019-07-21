@@ -14,4 +14,6 @@ use these values in .env
 When server is running check /api/doc or api/doc.json for Nelmio API documentation
 
 To run bot which will use all routes excatly once, use following command:
-`php bin/console app:run`
+`php bin/console app:run
+
+Postman environment and calls are exported and included in this repo (fatcat.postman_environment.json). 
