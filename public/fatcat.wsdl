@@ -1,0 +1,94 @@
+<!--
+
+Misha
+2019-07-20
+let you post/retrieve online message by SOAP protocol
+
+Online WSDL 1.1 SOAP generator 0.2
+Julien Blitte
+
+-->
+<definitions xmlns:tns="rs.fatcat.fatcat.soap.wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="rs.fatcat.fatcat.soap.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="let you post/retrieve online message by SOAP protocol" targetNamespace="rs.fatcat.fatcat.soap.wsdl">
+    <!--  definition of datatypes  -->
+    <types>
+        <schema xmlns="http://www.w3.org/2000/10/XMLSchema" targetNamespace="rs.fatcat.fatcat.soap.xsd">
+            <element name="firstName">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="lastName">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="email">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="street">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="country">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="orderAmount">
+                <complexType>
+                    <all>
+                        <element name="value" type="int"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="shippingAmount">
+                <complexType>
+                    <all>
+                        <element name="value" type="int"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="taxAmount">
+                <complexType>
+                    <all>
+                        <element name="value" type="int"/>
+                    </all>
+                </complexType>
+            </element>
+        </schema>
+    </types>
+    <!--  response messages  -->
+    <message name = "soapActionRequest">
+        <part name = "ask for customers" type = "xsd:string"/>
+    </message>
+
+    <message name = "soapActionResponse">
+        <part name = "receive customers" type = "xsd:string"/>
+    </message>
+    <!--  request messages  -->
+    <!--  server's services  -->
+    <portType name="Fatcat SOAP service"> </portType>
+    <!--  server encoding  -->
+    <binding name="Fatcat SOAP service_webservices" type="tns:Fatcat SOAP service">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    </binding>
+    <!--  access to service provider  -->
+    <service name="fatcat">
+        <port name="fatcat_0" binding="Fatcat SOAP service_webservices">
+            <soap:address location="http://fatcat/soap"/>
+        </port>
+    </service>
+</definitions>

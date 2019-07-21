@@ -81,7 +81,7 @@ class OrderService
      */
     public function create(Request $request): array
     {
-//        try {
+        try {
             $order = new Order();
             $content = json_decode($request->getContent(), true);
             $order = $this::addAttributes($content, $order);
@@ -95,9 +95,9 @@ class OrderService
             $this->customerRepository->save($customer);
 
             return ['created' => $order->getId()];
-//        } catch (\Exception $e) {
-//            return ['error' => $e->getMessage()];
-//        }
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 
     /**
@@ -116,12 +116,15 @@ class OrderService
                 return ['error' => 'there is no order with that id'];
             }
             $content = json_decode($request->getContent(), true);
-            $customer = $this->customerRepository->find($content['customer']);
-            if ($customer != null) {
-                $customer->addOrder($order);
-                $this->customerRepository->save($order);
-            }
             $order = $this::addAttributes($content, $order);
+            if (array_key_exists('customer', $content)) {
+                $customer = $this->customerRepository->find($content['customer']);
+                if ($customer != null) {
+                    $customer->addOrder($order);
+                    $this->customerRepository->save($order);
+                }
+                $order->setCustomer($customer);
+            }
             $this->repository->save($order);
             return ['updated' => $order->getId()];
         } catch (\Exception $e) {

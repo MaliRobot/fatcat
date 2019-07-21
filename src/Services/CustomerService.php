@@ -106,8 +106,9 @@ class CustomerService
             if ($customer == null) {
                 return ['error' => 'there is no customer with that id'];
             }
+            $id = $customer->getId();
             $this->repository->delete($customer);
-            return ['deleted' => $customer->getId()];
+            return ['deleted' => $id];
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -125,6 +126,26 @@ class CustomerService
             'country' => $customer->getCountry(),
             'street' => $customer->getStreet()
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomersOrders(){
+        $customers = $this->repository->findAll();
+//        $customers_arr = [];
+//        foreach($customers as $customer){
+//            array_push($customers_arr, $customer);
+////            $orders = $customer->getOrders();
+////            $name = $customer->getFirstName() . $customer->getLastName();
+////            $orders_arr = [$name => []];
+////            foreach ($orders as $order) {
+////                array_push($orders_arr[$name], $order);
+////            }
+////            array_push($customers_arr, $orders_arr);
+//        }
+
+        return $customers;
     }
 
     /**

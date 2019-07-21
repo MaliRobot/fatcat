@@ -32,7 +32,7 @@ security:
             anonymous: true
 
         public:
-            pattern: ^/api/orders
+            pattern: ^/soap
             security: false
 
         swagger:
@@ -52,5 +52,4 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/customers, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/, roles: IS_AUTHENTICATED_FULLY }
