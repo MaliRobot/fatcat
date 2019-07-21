@@ -23,4 +23,3 @@ app.swagger:
 app.soap:
   path: /soap
   methods: GET
-  defaults: { _controller: App\Controller\CustomerController::soapAction }

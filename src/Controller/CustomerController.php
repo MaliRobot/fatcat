@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Services\SecurityService;
+use App\Services\SoapService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\OrderRepository;
@@ -17,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Services\CustomerService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use ProxyManager\Factory\RemoteObject\Adapter\Soap;
 
 
 /**
@@ -167,30 +167,6 @@ class CustomerController extends AbstractController
     public function deleteOrderAction($customer,  CustomerService $customerService){
         $result = $customerService->delete($customer);
         return new JsonResponse($result);
-    }
-
-    /**
-     * @Route("/soap")
-     */
-    public function soapAction(CustomerService $customerService)
-    {
-        $soapServer = new \SoapServer('http://fatcat/fatcat.wsdl'); //, $customerService->getCustomersOrders());
-//        $result = $soapServer->setClass('App/');
-//        var_dump($result);
-
-        $customers = $customerService->getCustomersOrders();
-        foreach ($customers as $customer){
-            $soapServer->setObject($customer);
-        }
-
-        $response = new Response();
-        $response->headers->set('Content-Type', 'text/xml; charset=ISO-8859-1');
-
-        ob_start();
-        $soapServer->handle();
-        $response->setContent(ob_get_clean());
-
-        return $response;
     }
 
 }

@@ -1,52 +1,63 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-    <wsdl:definitions name="SoapService"
-                 targetNamespace="http://fatcat/fatcat.wsdl"
-                 xmlns="http://schemas.xmlsoap.org/wsdl/"
+    <definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                 xmlns:tns="urn:arnleadservicewsdl"
                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                 xmlns:tns="http://www.examples.com/wsdl/HelloService.wsdl"
-                 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                 xmlns="http://schemas.xmlsoap.org/wsdl/"
+                 targetNamespace="urn:soapservicewsdl">
 
-        <wsdl:message name="getCustomersOrdersRequest">
-            <wsdl:part name="name" type="xsd:string"/>
-        </wsdl:message>
+        <types>
+            <xsd:schema targetNamespace="urn:soapwsdl">
+                <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+                <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            </xsd:schema>
+        </types>
 
-        <wsdl:message name="getCustomersOrdersResponse">
-            <wsdl:part name="list" type="xsd:string"/>
-        </wsdl:message>
+        <message name="getCustomersOrdersRequest">
+            <part name="name" type="xsd:string"/>
+        </message>
 
-        <wsdl:portType name="Soap_PortType">
-            <soap:operation name="getCustomersOrders">
-                <wsdl:input message="tns:getCustomersOrdersRequest"/>
-                <wsdl:output message="tns:getCustomersOrdersResponse"/>
-            </soap:operation>
-        </wsdl:portType>
+        <message name="getCustomersOrdersResponse">
+            <part name="return" type="xsd:string"/>
+        </message>
 
-        <wsdl:binding name="Soap_Binding" type="tns:Soap_PortType">
+        <portType name="getCustomersOrderswsdlPortType">
+            <operation name="getCustomersOrders">
+                <documentation>Soap Service</documentation>
+                <input message="tns:getCustomersOrdersRequest"/>
+                <output message="tns:getCustomersOrdersResponse"/>
+            </operation>
+        </portType>
+
+        <binding name="getCustomersOrderswsdlBinding" type="tns:getCustomersOrderswsdlPortType">
             <soap:binding style="rpc"
                           transport="http://schemas.xmlsoap.org/soap/http"/>
-            <wsdl:operation name="getCustomersOrders">
-                <soap:operation soapAction="getCustomersOrders"/>
-                <wsdl:input>
+            <operation name="getCustomersOrders">
+                <soap:operation soapAction="urn:arnleadservicewsdl#getCustomersOrders"/>
+                <input>
                     <soap:body
                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
-                            namespace="urn:fatcat:get-customer-orders"
+                            namespace="urn:getCustomerOrderswsdl"
                             use="encoded"/>
-                </wsdl:input>
+                </input>
 
-                <wsdl:output>
+                <output>
                     <soap:body
                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
-                            namespace="urn:fatcat:get-customer-orders"
+                            namespace="urn:getCustomerOrderswsdl"
                             use="encoded"/>
-                </wsdl:output>
-            </wsdl:operation>
-        </wsdl:binding>
+                </output>
+            </operation>
+        </binding>
 
-        <wsdl:service name="Soap_Service">
+        <service name="getCustomerOrderswsdl">
             <documentation>WSDL File for SoalService</documentation>
-            <port binding="tns:Soap_Binding" name="Soap_Port">
+            <port binding="tns:getCustomerOrders" name="getCustomerOrderswsdlPort">
                 <soap:address
-                        location="http://fatcat/soap/" />
+                        location="http://fatcat/index.php/soap/" />
             </port>
-        </wsdl:service>
-    </wsdl:definitions>
+        </service>
+    </definitions>

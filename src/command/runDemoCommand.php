@@ -9,9 +9,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Dotenv\Dotenv;
 
-
+/**
+ * Run script which will use every API endpoint exactly once and check correctness
+ * Class runDemoCommand
+ * @package App\Command
+ */
 class runDemoCommand extends Command
 {
+
     public function __construct(string $path)
     {
         $this->path = $path;
@@ -29,6 +34,9 @@ class runDemoCommand extends Command
         // ...
     }
 
+    /**
+     * @param $httpClient
+     */
     protected function getToken($httpClient) {
 
         $response = $httpClient->request('POST', $this->baseURL . '/login', [
@@ -49,6 +57,15 @@ class runDemoCommand extends Command
         }
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int|void|null
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Starting test run of API routes');
@@ -194,7 +211,7 @@ class runDemoCommand extends Command
                 'Content-Type' => 'application/json',
             ]
         ]);
-        $output->writeln('Soap is //TODO');
+        $output->writeln('Soap is //TODO :(');
         $output->writeln('Finish');
 
     }
