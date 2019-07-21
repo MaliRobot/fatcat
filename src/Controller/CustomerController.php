@@ -174,11 +174,14 @@ class CustomerController extends AbstractController
      */
     public function soapAction(CustomerService $customerService)
     {
-        $soapServer = new \SoapServer('http://fatcat/fatcat.wsdl', $customerService->getCustomersOrders());
-//        $customers = $customerService->getCustomersOrders();
-//        foreach ($customers as $customer){
-//            $soapServer->setObject($customers);
-//        }
+        $soapServer = new \SoapServer('http://fatcat/fatcat.wsdl'); //, $customerService->getCustomersOrders());
+//        $result = $soapServer->setClass('App/');
+//        var_dump($result);
+
+        $customers = $customerService->getCustomersOrders();
+        foreach ($customers as $customer){
+            $soapServer->setObject($customer);
+        }
 
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml; charset=ISO-8859-1');

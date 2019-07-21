@@ -1,94 +1,52 @@
-<!--
+<?xml version="1.0" encoding="ISO-8859-1"?>
+    <wsdl:definitions name="SoapService"
+                 targetNamespace="http://fatcat/fatcat.wsdl"
+                 xmlns="http://schemas.xmlsoap.org/wsdl/"
+                 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                 xmlns:tns="http://www.examples.com/wsdl/HelloService.wsdl"
+                 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-Misha
-2019-07-20
-let you post/retrieve online message by SOAP protocol
+        <wsdl:message name="getCustomersOrdersRequest">
+            <wsdl:part name="name" type="xsd:string"/>
+        </wsdl:message>
 
-Online WSDL 1.1 SOAP generator 0.2
-Julien Blitte
+        <wsdl:message name="getCustomersOrdersResponse">
+            <wsdl:part name="list" type="xsd:string"/>
+        </wsdl:message>
 
--->
-<definitions xmlns:tns="rs.fatcat.fatcat.soap.wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="rs.fatcat.fatcat.soap.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="let you post/retrieve online message by SOAP protocol" targetNamespace="rs.fatcat.fatcat.soap.wsdl">
-    <!--  definition of datatypes  -->
-    <types>
-        <schema xmlns="http://www.w3.org/2000/10/XMLSchema" targetNamespace="rs.fatcat.fatcat.soap.xsd">
-            <element name="firstName">
-                <complexType>
-                    <all>
-                        <element name="value" type="string"/>
-                    </all>
-                </complexType>
-            </element>
-            <element name="lastName">
-                <complexType>
-                    <all>
-                        <element name="value" type="string"/>
-                    </all>
-                </complexType>
-            </element>
-            <element name="email">
-                <complexType>
-                    <all>
-                        <element name="value" type="string"/>
-                    </all>
-                </complexType>
-            </element>
-            <element name="street">
-                <complexType>
-                    <all>
-                        <element name="value" type="string"/>
-                    </all>
-                </complexType>
-            </element>
-            <element name="country">
-                <complexType>
-                    <all>
-                        <element name="value" type="string"/>
-                    </all>
-                </complexType>
-            </element>
-            <element name="orderAmount">
-                <complexType>
-                    <all>
-                        <element name="value" type="int"/>
-                    </all>
-                </complexType>
-            </element>
-            <element name="shippingAmount">
-                <complexType>
-                    <all>
-                        <element name="value" type="int"/>
-                    </all>
-                </complexType>
-            </element>
-            <element name="taxAmount">
-                <complexType>
-                    <all>
-                        <element name="value" type="int"/>
-                    </all>
-                </complexType>
-            </element>
-        </schema>
-    </types>
-    <!--  response messages  -->
-    <message name = "soapActionRequest">
-        <part name = "ask for customers" type = "xsd:string"/>
-    </message>
+        <wsdl:portType name="Soap_PortType">
+            <soap:operation name="getCustomersOrders">
+                <wsdl:input message="tns:getCustomersOrdersRequest"/>
+                <wsdl:output message="tns:getCustomersOrdersResponse"/>
+            </soap:operation>
+        </wsdl:portType>
 
-    <message name = "soapActionResponse">
-        <part name = "receive customers" type = "xsd:string"/>
-    </message>
-    <!--  request messages  -->
-    <!--  server's services  -->
-    <portType name="Fatcat SOAP service"> </portType>
-    <!--  server encoding  -->
-    <binding name="Fatcat SOAP service_webservices" type="tns:Fatcat SOAP service">
-        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
-    </binding>
-    <!--  access to service provider  -->
-    <service name="fatcat">
-        <port name="fatcat_0" binding="Fatcat SOAP service_webservices">
-            <soap:address location="http://fatcat/soap"/>
-        </port>
-    </service>
-</definitions>
+        <wsdl:binding name="Soap_Binding" type="tns:Soap_PortType">
+            <soap:binding style="rpc"
+                          transport="http://schemas.xmlsoap.org/soap/http"/>
+            <wsdl:operation name="getCustomersOrders">
+                <soap:operation soapAction="getCustomersOrders"/>
+                <wsdl:input>
+                    <soap:body
+                            encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            namespace="urn:fatcat:get-customer-orders"
+                            use="encoded"/>
+                </wsdl:input>
+
+                <wsdl:output>
+                    <soap:body
+                            encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            namespace="urn:fatcat:get-customer-orders"
+                            use="encoded"/>
+                </wsdl:output>
+            </wsdl:operation>
+        </wsdl:binding>
+
+        <wsdl:service name="Soap_Service">
+            <documentation>WSDL File for SoalService</documentation>
+            <port binding="tns:Soap_Binding" name="Soap_Port">
+                <soap:address
+                        location="http://fatcat/soap/" />
+            </port>
+        </wsdl:service>
+    </wsdl:definitions>

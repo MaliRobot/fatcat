@@ -31,3 +31,6 @@ yarn-error.log
 
 ### jwt ###
 /config/jwt/
+
+### idea ###
+.idea/

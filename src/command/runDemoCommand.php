@@ -51,7 +51,8 @@ class runDemoCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Starting test runs of API routes');
+        $output->writeln('Starting test run of API routes');
+        $output->writeln('*******************************');
 
         $httpClient = HttpClient::create();
 
@@ -76,7 +77,9 @@ class runDemoCommand extends Command
         ]);
 
         $customerId = json_decode($response->getContent(), true)['created'];
-        $output->writeln($customerId . ' - we have id so it means it worked');
+        $output->writeln($customerId . ' - we are able to get id so it means the route worked');
+        $output->writeln('*******************************');
+        $output->writeln('Testing GET customer route');
 
         $response = $httpClient->request('GET', $this->baseURL . '/api/customers/' . $customerId, [
             'headers' => [
@@ -87,8 +90,9 @@ class runDemoCommand extends Command
 
         $output->writeln('If call was successful we should see object attributes bellow');
         dump(json_decode($response->getContent(), true));
+        $output->writeln('*******************************');
 
-        $output->writeln('Testing customer update');
+        $output->writeln('Testing Customer PATCH route');
         $response = $httpClient->request('PATCH', $this->baseURL . '/api/customers/' . $customerId, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -102,10 +106,11 @@ class runDemoCommand extends Command
         $customerUpdated = json_decode($response->getContent(), true)["updated"];
         if ($customerUpdated == $customerId) {
             $output->writeln('Result: ' . (string) $customerUpdated == $customerId);
-            $output->writeln('We compared returned ID with original one, means the method worked ok');
+            $output->writeln('We compared returned ID with original one, meaning the method worked ok');
         }
 
-        $output->writeln('Testing delete method on Customer');
+        $output->writeln('*******************************');
+        $output->writeln('Testing Delete Customer route');
         $response = $httpClient->request('DELETE', $this->baseURL . '/api/customers/' . $customerId, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -119,7 +124,8 @@ class runDemoCommand extends Command
             $output->writeln('This time matched ID means Customer is deleted successfully');
         }
 
-        $output->writeln('Testing creating Order');
+        $output->writeln('*******************************');
+        $output->writeln('Testing POST Order route');
         $response = $httpClient->request('POST', $this->baseURL . '/api/orders', [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -134,11 +140,11 @@ class runDemoCommand extends Command
         ]);
 
         $orderId = json_decode($response->getContent(), true)['created'];
-        $output->writeln("Deleted key: " . $orderId);
         $output->writeln('If script successfully ran it means it found created key in response
         which is excatly what we need as a proof that the method works');
 
-        $output->writeln('Checking get method with Order');
+        $output->writeln('*******************************');
+        $output->writeln('Checking GET Order route');
         $response = $httpClient->request('GET', $this->baseURL . '/api/orders/' . $orderId, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -148,8 +154,9 @@ class runDemoCommand extends Command
 
         dump(json_decode($response->getContent(), true));
         $output->writeln('If everything is ok if previous lined printed order attributes.');
+        $output->writeln('*******************************');
 
-        $output->writeln('Testing patch method on Order');
+        $output->writeln('Testing PATCH Order route');
         $response = $httpClient->request('PATCH', $this->baseURL . '/api/orders/' . $orderId, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -166,7 +173,8 @@ class runDemoCommand extends Command
             'equal means the method worked ok');
         }
 
-        $output->writeln('Testing delete method on order');
+        $output->writeln('*******************************');
+        $output->writeln('Testing Delete Order method');
         $response = $httpClient->request('DELETE', $this->baseURL . '/api/orders/' . $orderId, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -179,12 +187,14 @@ class runDemoCommand extends Command
             $output->writeln('Again, we compared returned ID with original one, and equal means it is ok');
         }
 
+        $output->writeln('*******************************');
         $output->writeln('Testing SOAP method');
         $response = $httpClient->request('GET', $this->baseURL . '/soap', [
             'headers' => [
                 'Content-Type' => 'application/json',
             ]
         ]);
+        $output->writeln('Soap is //TODO');
         $output->writeln('Finish');
 
     }
