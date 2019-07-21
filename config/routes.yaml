@@ -19,7 +19,3 @@ app.swagger:
   path: /api/doc.json
   methods: GET
   defaults: { _controller: nelmio_api_doc.controller.swagger }
-
-app.soap:
-  path: /soap
-  methods: GET
